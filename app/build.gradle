@@ -1,22 +1,85 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.8.20'
+//file:noinspection GroovyAssignabilityCheck
+//file:noinspection GrUnresolvedAccess
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.20'
+    id 'application'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
+
+group = 'com.tsm.android'
+version = '1.0-DEV'
+ext.projectName = "droid-kit"
+
+application {
+    setApplicationDefaultJvmArgs([
+            "-XX+IgnoreUnrecognizedVMOptions",
+            "--add-modules=jdk.zipfs"
+    ])
+    mainClass.set("com.tsm.android.MainKt")
+}
 
 repositories {
     mavenCentral()
+    google()
 }
 
 dependencies {
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom'))
+
+    implementation(libs.commonsCompress) {
+        because 'ZipFile implementation'
+    }
+    implementation(libs.koin)
+    implementation(libs.kotlin.serialization)
+    implementation(libs.okhttp.core)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.okio)
+    implementation(libs.picocli.core)
+    implementation(libs.progressbar)
+    implementation(libs.sdklib.tools)
+    implementation(libs.slf4j)
+
+    testImplementation(libs.truth)
 }
 
-test {
+def javaVersion = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+}
+
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
-kotlin {
-    jvmToolchain(11)
+tasks.named("processTestResources", ProcessResources) {
+    from 'src/dist'
+}
+
+tasks.withType(Test).configureEach {
+    testLogging {
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+    }
+}
+
+tasks.withType(JavaExec).configureEach {
+    setAllJvmArgs(getAllJvmArgs() + ["-Dorg.slf4j.simplelogger.defaultLogLevel=DEBUG"])
+    notCompatibleWithConfigurationCache("uses java.io.PipedInputStream at execution time")
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += "--add-opens=java.base/sun.security.tools.keytool=ALL-UNNAMED"
+    jvmArgs += "--add-opens=java.java/sun/security.x509=ALL-UNNAMED"
+}
+
+run {
+    standardInput = System.in
 }

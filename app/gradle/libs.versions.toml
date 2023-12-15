@@ -1,0 +1,24 @@
+[versions]
+commonsCompress = "1.21"
+koin = "3.1.6"
+kotlinSerialization = "1.3.1"
+okttp = "4.5.0"
+okio = "3.0.0"
+picocli = "4.6.2"
+progressbar = "0.9.2"
+sdklib = "30.1.2"
+slf4j = "1.7.25"
+truth = "1.1.3"
+
+[libraries]
+commonsCompress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
+koin = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okttp" }
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okttp" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+picocli-core = { module = "info.picocli:picocli", version.ref = "picocli" }
+progressbar = { module = "me.tongfei:progressbar", version.ref = "progressbar" }
+sdklib-tools = { module = "com.android.tools:sdklib", version.ref = "sdklib" }
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
