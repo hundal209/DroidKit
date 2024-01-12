@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.commonsCompress) {
         because 'ZipFile implementation'
     }
+    implementation(libs.guava)
     implementation(libs.koin)
     implementation(libs.kotlin.serialization)
     implementation(libs.okhttp.core)
