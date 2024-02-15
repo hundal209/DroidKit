@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.progressbar)
     implementation(libs.sdklib.tools)
     implementation(libs.slf4j)
+    implementation(libs.logback)
 
     testImplementation(libs.truth)
 }

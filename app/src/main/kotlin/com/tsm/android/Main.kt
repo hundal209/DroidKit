@@ -20,5 +20,6 @@ fun main(vararg args: String) {
         val holder = newCommandLineHolder(root, distribution, catalogLocator, executor, LOGGER)
         val cli = CommandLine(holder.command, holder.converterFactory)
         cli.isCaseInsensitiveEnumValuesAllowed = true
+        cli.execute(*args)
     }
 }

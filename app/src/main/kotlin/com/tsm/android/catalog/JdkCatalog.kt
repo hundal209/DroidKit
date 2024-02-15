@@ -26,5 +26,5 @@ data class JdkCatalog(private val jdks: Map<String, Jdk>) {
         }
     }
 
-    fun find(version: String): Jdk? = jdks[version]
+    fun find(version: String): Jdk? = jdks.values.find { it.version == version }
 }
